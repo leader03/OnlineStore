@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { useState } from 'react';
-import { AiOutlineSearch } from 'react-icons/Ai'
+import { AiOutlineSearch } from 'react-icons/ai'
 import { FaCartPlus } from 'react-icons/fa'
 import Cart from './Cart';
 import { useSelector } from 'react-redux';
