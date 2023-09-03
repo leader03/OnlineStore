@@ -5,7 +5,7 @@ import { FaCartPlus } from 'react-icons/fa'
 import Cart from './Cart';
 import { useSelector } from 'react-redux';
 
-const Header = ({setCartItems}: any) => {
+const Header = () => {
   const {cartItems} = useSelector((state: any) => state.datas)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const toggleCart = () => {
@@ -32,7 +32,7 @@ const Header = ({setCartItems}: any) => {
 
       </div>
     </nav>
-    {isCartOpen && <Cart setCartItems={setCartItems} isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />}
+    {isCartOpen && <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />}
     </>
   )
 }

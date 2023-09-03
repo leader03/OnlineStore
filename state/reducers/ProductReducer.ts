@@ -3,7 +3,6 @@ const initialState = {
   };
 
 export const datalist = (state= initialState,action:any) => {
-    console.log(action);
     
     if(action.type === 'data'){
         return {
