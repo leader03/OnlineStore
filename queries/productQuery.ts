@@ -1,3 +1,4 @@
+"use client"
 import { getAllProducts } from "@/services/product"
 import { useQuery } from "@tanstack/react-query"
 
