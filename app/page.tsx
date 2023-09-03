@@ -21,12 +21,6 @@ export default function Home() {
     return cartItems.some((item) => item.id === itemId);
   };
 
-
-
-
-
-
-
   useMemo(() => {
     const productList = allProducts?.data
     const newData = productList?.map((item: ProductType) => {
@@ -37,9 +31,11 @@ export default function Home() {
         description: item.description,
         category: item.category,
         price: item.price,
-        rating: item.rating.rate
+        rating: item.rating.rate,
+        quantity:1
       }
     })
+    // dataList(newData)
     setProductData(newData)
   },[allProducts?.data])
 
@@ -47,9 +43,9 @@ export default function Home() {
 
   return (
     <main>
-      <Header cartItems={cartItems} setCartItems={setCartItems} />
+      {/* <Header cartItems={cartItems} setCartItems={setCartItems} /> */}
       <div>
-        <div className="container mx-auto flex flex-col md:flex-row gap-12 mt-20">
+        <div className="container mx-auto flex flex-col md:flex-row gap-12 p-8">
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {productData?.map((item: any) => (
                 <Product key={item.id} product={item} isItemInCart={isItemInCart} addToCart={addToCart} />

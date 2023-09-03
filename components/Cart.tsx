@@ -1,24 +1,35 @@
+import { actionsCreators } from "@/state";
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
 
-const Cart = ({cartItems,setCartItems}:any) => {
-  const [quantity, setQuantity] = useState(1);
-  const [showModal, setShowModal] = useState(true);
+const Cart = ({setCartItems,isCartOpen,setIsCartOpen}:any) => {
 
-  const handleQuantityChange = (value: number) => {
-    setQuantity((prevQuantity) => Math.max(1, prevQuantity + value));
-  };
+    const {cartItems} = useSelector((state: any) => state.datas)
+    const dispatch = useDispatch()    
+    const {removeFromCart,increaseQuantity} = bindActionCreators(actionsCreators,dispatch)
 
-  const handleRemoveItem = (itemId: number) => {
-    setCartItems((prevItems: any) => prevItems.filter((item: any) => item.id !== itemId));
-  };
+  const handleQuantityChange = (product: any,value: number) => {  
+    const updatedProduct = { ...product, quantity: value };
+    increaseQuantity(updatedProduct)
+
+//     setCartItems((prevItems: any) =>
+//     prevItems.map((item: any) =>
+//       item.id === itemId
+//         ? { ...item, quantity: Math.max(1, item.quantity + value) }
+//         : item
+//     )
+//   );
+
+  }
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setIsCartOpen(false);
   };
 
   return (
     <>
-      {showModal && (
+      {isCartOpen && (
         <div className="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
           <div className="fixed inset-0 overflow-hidden">
@@ -81,7 +92,7 @@ const Cart = ({cartItems,setCartItems}:any) => {
                                           <button
                                             type="button"
                                             className="p-1 border border-gray-300 rounded-md hover:bg-gray-200"
-                                            onClick={() => handleQuantityChange(-1)}
+                                            onClick={() => handleQuantityChange(item,-1)}
                                           >
                                             <span className="sr-only">Reduce quantity</span>
                                             <svg
@@ -102,13 +113,13 @@ const Cart = ({cartItems,setCartItems}:any) => {
                                             type="number"
                                             min="1"
                                             className="mx-2 border border-gray-300 rounded-md text-center w-12"
-                                            value={quantity}
-                                            onChange={(e) => setQuantity(parseInt(e.target.value))}
-                                          />
+                                            value={item.quantity}
+                                            onChange={(e) => handleQuantityChange(item, parseInt(e.target.value))}
+                                            />
                                           <button
                                             type="button"
                                             className="p-1 border border-gray-300 rounded-md hover:bg-gray-200"
-                                            onClick={() => handleQuantityChange(1)}
+                                            onClick={() => handleQuantityChange(item,1)}
                                           >
                                             <span className="sr-only">Increase quantity</span>
                                             <svg
@@ -130,7 +141,7 @@ const Cart = ({cartItems,setCartItems}:any) => {
                                           <button
                                             type="button"
                                             className="font-medium text-pink-600 hover:text-pink-500"
-                                            onClick={() => handleRemoveItem(item.id)}
+                                            onClick={() => removeFromCart(item.id)}
                                           >
                                             Remove
                                           </button>
@@ -157,3 +168,7 @@ const Cart = ({cartItems,setCartItems}:any) => {
 };
 
 export default Cart;
+function increase(updatedProduct: any): any {
+    throw new Error("Function not implemented.");
+}
+
